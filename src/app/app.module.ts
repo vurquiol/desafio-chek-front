@@ -13,12 +13,21 @@ import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { HttpClientModule } from '@angular/common/http';
+import {MatDialogModule} from '@angular/material/dialog';
+import { SnackBarAnnotatedComponent } from './components/snack-bar-annotated/snack-bar-annotated.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatMenuModule} from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon'
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    AccountComponent
+    AccountComponent,
+    SnackBarAnnotatedComponent
   ],
   imports: [
     BrowserModule,
@@ -31,9 +40,16 @@ import { HttpClientModule } from '@angular/common/http';
     MatButtonModule,
     ReactiveFormsModule,
     MatProgressSpinnerModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    MatToolbarModule,
+    MatPaginatorModule,
+    MatMenuModule,
+    MatIconModule,
+    MatTooltipModule
   ],
-  providers: [],
+  providers: [SnackBarAnnotatedComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

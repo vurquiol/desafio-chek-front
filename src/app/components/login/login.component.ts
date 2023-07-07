@@ -3,6 +3,8 @@ import { ThemePalette } from '@angular/material/core';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 import {ProgressSpinnerMode} from '@angular/material/progress-spinner';
+import {SnackBarAnnotatedComponent} from '../snack-bar-annotated/snack-bar-annotated.component';
+
 
 @Component({
   selector: 'app-login',
@@ -22,14 +24,14 @@ public spinner:any=false;
 color: ThemePalette = 'primary';
   mode: ProgressSpinnerMode = 'determinate';
 
-constructor(private _userService: UserService) {
+constructor(private _userService: UserService, public snackbar: SnackBarAnnotatedComponent) {
   this.user = new User('', '', '', 0, '', '', 0);
   
 }
 ngOnInit(): void {
   this.identity = this._userService.getIdentity()
   this.token= this._userService.getToken();
-     this.logout();
+  this.logout();
 }
 
 public crearCuenta(){
@@ -49,7 +51,7 @@ logIn(){
       this.identity = identity;
 
      if (!this.identity._id) {
-          console.log(this.identity._id)
+        this.snackbar.openSnackBar("El usuario no se ha generado correctamente", 'Close');  
       } else {       
         localStorage.setItem('identity',JSON.stringify(identity));
         this._userService.signUp(this.user,true).subscribe(
@@ -57,7 +59,8 @@ logIn(){
             let token = response.token;
             this.token = token;
 
-            if (this.token.length <= 0) {          
+            if (this.token.length <= 0) { 
+              this.snackbar.openSnackBar("El token no ha sido generado", 'Close');            
             } else {             
               localStorage.setItem('token',token);            
             }
@@ -67,8 +70,9 @@ logIn(){
             var errorMessage = <any>error.error.message;
             if (errorMessage != null) {
               this.errorMessage = error.error.message   
+              this.snackbar.openSnackBar(error.error.message, 'Close');
               this.spinner=false          
-           
+              
             }
           }
         );       
@@ -78,7 +82,12 @@ logIn(){
     error => {
       var errorMessage = <any>error.error.message;
       if (errorMessage != null) {
-        this.errorMessage = error.error.message       
+        this.errorMessage = error.error.message   
+        if (error.status = 404) {
+          this.snackbar.openSnackBar("Error en el correo o clave", 'Close');       
+        } else {
+          this.snackbar.openSnackBar(error.error.message, 'Close');       
+        }    
         this.spinner=false
               
       }

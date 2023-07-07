@@ -1,0 +1,65 @@
+.space {
+    flex: 1 1 auto;
+  }
+
+.marginleft{
+    margin-right: 10%;
+}
+
+.tarjeta-credito {
+    margin-top: 5% ;
+    margin-left: 30%;
+    width: 300px;
+    height: 200px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .tarjeta-header {
+    height: 40px;
+    background-color: #ff4081;
+  }
+  
+  .chip {
+    width: 70px;
+    height: 40px;
+    background-color: #fff;
+    border-radius: 5px;
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+  }
+  
+  .tarjeta-body {
+    padding: 20px;
+  }
+  
+  .numero-tarjeta {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .holder {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .campo {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-weight: bold;
+    font-size: 12px;
+    color: #777;
+  }
+  
+  span {
+    font-size: 14px;
+    color: #333;
+  }
