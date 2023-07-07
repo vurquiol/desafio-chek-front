@@ -23,7 +23,20 @@ export class UserService {
 
         let headers = new HttpHeaders({'Content-Type':'application/json'});
 
-        return this._http.post<any>(this.url +'login',params,{headers: headers});
+        return this._http.post<any>(this.url +'loguer',params,{headers: headers});
+    }
+
+    loginRegister(user_login: any,gethash:boolean){
+        if (gethash) {
+            user_login.gethash = gethash;
+        }
+
+        let json = JSON.stringify(user_login);
+        let params = json;
+
+        let headers = new HttpHeaders({'Content-Type':'application/json'});
+
+        return this._http.post<any>(this.url +'loginRegister',params,{headers: headers});
     }
 
     getIdentity(){

@@ -1,9 +1,28 @@
-.contenedor{
+.content{
     width: 100%;
     height: 50%;
     display:flex;
     align-items: center;
     justify-content: center;
+    background-image: url(/assets/img/firts-image-mastercard.svg),    
+    radial-gradient(78.19% 240.01% at 69.19% 63.4%, #b556c7 10%, #53357d 100%);
+    background-repeat: no-repeat;
+    background-size: 120% 110%;
+    border-radius: 10px;
+    
+}
+
+.h1{
+    color: #5d4284;
+    padding-top: 150px;
+    text-align: center;
+    padding-bottom: 25px;
+    font-weight: 900;
+}
+
+h2{
+    color: #fff;
+    font-weight:500;
 }
 
 :root{
@@ -25,7 +44,9 @@
 }
 
 .box-login{
-    width: 35%;
+    width: 45%;
+    border-radius: 20px;
+    border-color: #b556c7;
 }
 .link-custom a{
     text-decoration: none;
@@ -60,7 +81,7 @@
    margin-left: 47% !important;
 }
 
-.spinnerDIV{   
+.spinnerdiv{   
     background: rgba(64, 64, 64, 0.4);   
     display: block;
     position: fixed;
@@ -74,7 +95,8 @@
  }
 
  button[disabled]{
-    border: 1px solid #999999;
-    background-color: #cccccc;
-    color: #666666;
+    border: 1px solid #53357d;
+    background-color: #53357d;
+    color: #ffffff;
+
   }

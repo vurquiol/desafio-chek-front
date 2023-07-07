@@ -29,6 +29,7 @@ constructor(private _userService: UserService) {
 ngOnInit(): void {
   this.identity = this._userService.getIdentity()
   this.token= this._userService.getToken();
+     this.logout();
 }
 
 public crearCuenta(){
@@ -48,7 +49,7 @@ logIn(){
       this.identity = identity;
 
      if (!this.identity._id) {
-          
+          console.log(this.identity._id)
       } else {       
         localStorage.setItem('identity',JSON.stringify(identity));
         this._userService.signUp(this.user,true).subscribe(
@@ -66,25 +67,42 @@ logIn(){
             var errorMessage = <any>error.error.message;
             if (errorMessage != null) {
               this.errorMessage = error.error.message   
-              this.spinner=false                        
+              this.spinner=false          
+           
             }
           }
         );       
       }
+      
     },
     error => {
       var errorMessage = <any>error.error.message;
       if (errorMessage != null) {
-        this.errorMessage = error.error.message
-        if (error.status = 404) {
-               
-        } else {    
-        }
+        this.errorMessage = error.error.message       
         this.spinner=false
               
       }
     }
   );
+  
+  this._userService.loginRegister(this.user,false).subscribe(
+    response => {
+      this.user = response.user;
+    },
+    error => {
+      if (error.status = 401) {
+        this.errorMessage = error.error.message
+      } else {
+        var errorMessage = <any>error.error.message;
+        if (errorMessage != null) {
+          this.errorMessage = error.error.message
+                    
+        }
+      }
+      this.spinner = false;
+    }
+  );
+   
 }
 
 logout(){
