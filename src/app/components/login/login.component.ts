@@ -22,7 +22,7 @@ global:any
 public spinner:any=false;
 
 color: ThemePalette = 'primary';
-  mode: ProgressSpinnerMode = 'determinate';
+mode: ProgressSpinnerMode = 'determinate';
 
 constructor(private _userService: UserService, public snackbar: SnackBarAnnotatedComponent) {
   this.user = new User('', '', '', 0, '', '', 0);
@@ -30,8 +30,7 @@ constructor(private _userService: UserService, public snackbar: SnackBarAnnotate
 }
 ngOnInit(): void {
   this.identity = this._userService.getIdentity()
-  this.token= this._userService.getToken();
-  this.logout();
+  this.token= this._userService.getToken();  
 }
 
 public crearCuenta(){
@@ -94,23 +93,7 @@ logIn(){
     }
   );
   
-  this._userService.loginRegister(this.user,false).subscribe(
-    response => {
-      this.user = response.user;
-    },
-    error => {
-      if (error.status = 401) {
-        this.errorMessage = error.error.message
-      } else {
-        var errorMessage = <any>error.error.message;
-        if (errorMessage != null) {
-          this.errorMessage = error.error.message
-                    
-        }
-      }
-      this.spinner = false;
-    }
-  );
+  this._userService.loginRegister(this.user,false);
    
 }
 

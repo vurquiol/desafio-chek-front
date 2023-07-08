@@ -29,13 +29,19 @@ export class AccountComponent implements OnInit {
   }
 
   account: any;
+  accountId: any;
   user: any;
+  valorEntrada: string = '';
+  valorFormateado: string = '';
 
   ngOnInit(): void {    
     this.user = this._userService.getIdentity();
     this.spinner = true;
     this._accountService.accountBalance(this.user,false).subscribe(
       response => {
+       
+        this.contarCaracteres(response.account.idAccount);
+        this.accountId = this.valorFormateado;
         this.account = response.account;
         console.log(this.account);
       /*   if (response.historico.length >= 1) {
@@ -56,6 +62,18 @@ export class AccountComponent implements OnInit {
       }
     );
   } 
+
+
+  contarCaracteres(valor1 :number) {
+    // Elimina los espacios existentes antes de contar los caracteres
+    const valorSinEspacios = valor1.toString().replace(/\s/g, '');
+
+    // Divide el valor en grupos de cuatro caracteres
+    const grupos = valorSinEspacios.match(/.{1,4}/g);
+
+    // Une los grupos con espacios y actualiza el valor formateado
+    this.valorFormateado = grupos ? grupos.join(' ') : '';
+  }
 
   logout(){
     this.logOut.emit(true);

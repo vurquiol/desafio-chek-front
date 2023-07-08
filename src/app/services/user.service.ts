@@ -22,7 +22,7 @@ export class UserService {
         let params = json;
 
         let headers = new HttpHeaders({'Content-Type':'application/json'});
-
+        console.log(params)
         return this._http.post<any>(this.url +'loguer',params,{headers: headers});
     }
 

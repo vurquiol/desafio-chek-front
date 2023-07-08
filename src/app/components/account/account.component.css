@@ -10,11 +10,12 @@
     margin-top: 5% ;
     margin-left: 30%;
     width: 300px;
-    height: 200px;
-    background-color: #f5f5f5;
+    height: 200px;    
     border-radius: 10px;
     position: relative;
     overflow: hidden;
+    background-image: url(/assets/img/firts-image-mastercard.svg),    
+    radial-gradient(78.19% 240.01% at 69.19% 63.4%, #b556c7 10%, #53357d 100%);
   }
   
   .tarjeta-header {
@@ -40,7 +41,7 @@
   .numero-tarjeta {
     font-size: 24px;
     margin-bottom: 20px;
-    color: #333;
+    color: #fff;
   }
   
   .holder {
@@ -56,10 +57,10 @@
   label {
     font-weight: bold;
     font-size: 12px;
-    color: #777;
+    color: #fff;
   }
   
   span {
     font-size: 14px;
-    color: #333;
+    color: #fff;
   }
