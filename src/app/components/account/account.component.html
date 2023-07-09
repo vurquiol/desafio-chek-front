@@ -39,7 +39,7 @@
             {{ accountId }}
           </div>
           <div  *ngIf="account!=null && account.accountBalance!=null" class="numero-tarjeta">
-            Saldo : {{ account.accountBalance }}
+            Saldo : ${{ balance }}
           </div>
           <div class="info-tarjeta">
             <div *ngIf="account!=null && account.userCompleteName!=null" >

@@ -30,9 +30,11 @@ export class AccountComponent implements OnInit {
 
   account: any;
   accountId: any;
+  balance: any;
   user: any;
   valorEntrada: string = '';
   valorFormateado: string = '';
+  valorFormateadoSaldo: string = '';
 
   ngOnInit(): void {    
     this.user = this._userService.getIdentity();
@@ -41,14 +43,14 @@ export class AccountComponent implements OnInit {
       response => {
        
         this.contarCaracteres(response.account.idAccount);
+        this.contarCaracteresSaldo(response.account.accountBalance);
+        
+        this.balance = this.valorFormateadoSaldo;
         this.accountId = this.valorFormateado;
+
         this.account = response.account;
         console.log(this.account);
-      /*   if (response.historico.length >= 1) {
-           
-        } else {
-          this.snackbar.openSnackBar("NO", 'Close');
-        } */
+    
         this.spinner = false;
       },
       error => {
@@ -63,7 +65,7 @@ export class AccountComponent implements OnInit {
     );
   } 
 
-
+//concatena y separa los valores del id account
   contarCaracteres(valor1 :number) {
     // Elimina los espacios existentes antes de contar los caracteres
     const valorSinEspacios = valor1.toString().replace(/\s/g, '');
@@ -73,6 +75,16 @@ export class AccountComponent implements OnInit {
 
     // Une los grupos con espacios y actualiza el valor formateado
     this.valorFormateado = grupos ? grupos.join(' ') : '';
+  }
+
+  contarCaracteresSaldo(valor1 :number) {
+    // Elimina los espacios existentes antes de contar los caracteres
+    const valorSinEspacios = valor1.toString().replace(/\s/g, '');
+    
+    const numeroDividido = valor1.toLocaleString('es-ES');
+
+    // Une los grupos con espacios y actualiza el valor formateado
+    this.valorFormateadoSaldo = numeroDividido ;
   }
 
   logout(){
