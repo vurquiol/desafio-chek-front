@@ -10,7 +10,7 @@ export class AccountService {
     token: any;
 
     constructor(private _http: HttpClient) {
-        this.url = "http://localhost:3005/api/"
+        this.url = "https://chek-back-vurquiol.rj.r.appspot.com/api/"
     }
 
     accountBalance(user_login: any,gethash:boolean){
