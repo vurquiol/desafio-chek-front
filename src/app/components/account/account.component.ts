@@ -1,6 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
 import {SnackBarAnnotatedComponent} from '../snack-bar-annotated/snack-bar-annotated.component';
 import { AccountService } from 'src/app/services/account.service';
 
@@ -12,14 +11,6 @@ import { AccountService } from 'src/app/services/account.service';
 })
 
 export class AccountComponent implements OnInit {
-
-  tarjetaCredito = {
-    numero: '**** **** **** 1234',
-    titular: 'John Doe',
-    fechaExpiracion: '12/24',
-    cvv: '123',
-    saldo: '500000'
-  };
 
   @Output() logOut = new EventEmitter<boolean>();
   
@@ -42,8 +33,8 @@ export class AccountComponent implements OnInit {
     this._accountService.accountBalance(this.user,false).subscribe(
       response => {
        
-        this.contarCaracteres(response.account.idAccount);
-        this.contarCaracteresSaldo(response.account.accountBalance);
+        this.concatIdAccount(response.account.idAccount);
+        this.concatcAmountBalance(response.account.accountBalance);
         
         this.balance = this.valorFormateadoSaldo;
         this.accountId = this.valorFormateado;
@@ -66,9 +57,9 @@ export class AccountComponent implements OnInit {
   } 
 
 //concatena y separa los valores del id account
-  contarCaracteres(valor1 :number) {
+ concatIdAccount(idAccount :number) {
     // Elimina los espacios existentes antes de contar los caracteres
-    const valorSinEspacios = valor1.toString().replace(/\s/g, '');
+    const valorSinEspacios = idAccount.toString().replace(/\s/g, '');
 
     // Divide el valor en grupos de cuatro caracteres
     const grupos = valorSinEspacios.match(/.{1,4}/g);
@@ -77,11 +68,9 @@ export class AccountComponent implements OnInit {
     this.valorFormateado = grupos ? grupos.join(' ') : '';
   }
 
-  contarCaracteresSaldo(valor1 :number) {
-    // Elimina los espacios existentes antes de contar los caracteres
-    const valorSinEspacios = valor1.toString().replace(/\s/g, '');
-    
-    const numeroDividido = valor1.toLocaleString('es-ES');
+  concatcAmountBalance(balance :number) {
+    // Elimina los espacios existentes antes de contar los caracteres 
+    const numeroDividido = balance.toLocaleString('es-ES');
 
     // Une los grupos con espacios y actualiza el valor formateado
     this.valorFormateadoSaldo = numeroDividido ;
