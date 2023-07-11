@@ -18,13 +18,25 @@ export class AccountService {
             user_login.gethash = gethash;
         }
         
-        console.log(user_login);
         let json = JSON.stringify(user_login);
         let params = json;
 
         let headers = new HttpHeaders({'Content-Type':'application/json'});
 
         return this._http.post<any>(this.url +'balance',params,{headers: headers});
+    }
+
+    historical(user_login: any,gethash:boolean){
+        if (gethash) {
+            user_login.gethash = gethash;
+        }
+        
+        let json = JSON.stringify(user_login);
+        let params = json;
+
+        let headers = new HttpHeaders({'Content-Type':'application/json'});
+
+        return this._http.post<any>(this.url +'historical',params,{headers: headers});
     }
 
     getIdentity(){

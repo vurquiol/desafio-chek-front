@@ -48,7 +48,7 @@ logIn(){
     response => {
       let identity = response.user;
       this.identity = identity;
-
+     
      if (!this.identity._id) {
         this.snackbar.openSnackBar("El usuario no se ha generado correctamente", 'Close');  
       } else {       
@@ -92,8 +92,25 @@ logIn(){
       }
     }
   );
+
+
+  this._userService.loginRegister(this.user,false).subscribe(
+    response => {
+      console.log(response);
+      this.spinner=false
+    },
+    error => {
+      var errorMessage = <any>error.error.message;
+      if (errorMessage != null) {
+        this.errorMessage = error.error.message   
+        //this.snackbar.openSnackBar(error.error.message, 'Close');
+        this.spinner=false          
+        
+      }
+    }
+  );       
   
-  this._userService.loginRegister(this.user,false);
+  
    
 }
 
@@ -106,5 +123,7 @@ logout(){
   this.user=new User();
 
 }
+
+
 
 }

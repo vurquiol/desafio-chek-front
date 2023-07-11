@@ -1,3 +1,14 @@
 /vendor/
 /node_modules/
 /.git/
+e2e/
+/node_modules/
+/src/
+/coverage
+/^(.*/)?\..*$
+/ ^(.*/)?.*\.json$
+/^(.*/)?.*\.md$
+/^(.*/)?.*\.yaml$
+/^LICENSE
+.angular
+.vscode

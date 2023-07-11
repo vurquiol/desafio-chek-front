@@ -30,13 +30,26 @@ export class UserService {
         if (gethash) {
             user_login.gethash = gethash;
         }
-
+        
         let json = JSON.stringify(user_login);
         let params = json;
 
         let headers = new HttpHeaders({'Content-Type':'application/json'});
 
         return this._http.post<any>(this.url +'loginRegister',params,{headers: headers});
+    }
+
+    attempt(user_login: any,gethash:boolean){
+        if (gethash) {
+            user_login.gethash = gethash;
+        }
+        
+        let json = JSON.stringify(user_login);
+        let params = json;
+
+        let headers = new HttpHeaders({'Content-Type':'application/json'});
+
+        return this._http.post<any>(this.url +'loginAttempt',params,{headers: headers});
     }
 
     getIdentity(){

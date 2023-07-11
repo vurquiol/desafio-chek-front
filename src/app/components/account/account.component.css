@@ -1,71 +1,117 @@
 .space {
-    flex: 1 1 auto;
-  }
+  flex: 1 1 auto;
+}
 
 .marginleft{
-    margin-right: 20%;
+  margin-right: 25%;
 }
 
 .tarjeta-credito {
-    margin-top: 5% ;
-    margin-left: 25%;
-    width: 300px;
-    height: 200px;    
-    border-radius: 10px;
-    position: relative;
-    overflow: hidden;
-    background-image: url(/assets/img/firts-image-mastercard.svg),    
-    radial-gradient(78.19% 240.01% at 69.19% 63.4%, #b556c7 10%, #53357d 100%);
-  }
+  margin-top: 5%;
+  margin-left: 25%;
+  width: 330px;
+  height: 210px;    
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  background-image: url(/assets/img/firts-image-mastercard.svg),    
+  radial-gradient(78.19% 240.01% at 69.19% 63.4%, #b556c7 10%, #53357d 100%);
+}
+
+.tarjeta-header {
+  height: 60px;
+  background-color: #ff4081;
+}
+
+.chip {
+  width: 70px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 5px;
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+}
+
+.tarjeta-body {
+  padding: 20px;
+}
+
+.fecha-historico{
+  position: absolute;
+  top: 10%;
+  left: 2%;
+  width: 10%!important;
+
+}
+
+.info-tarjeta{
+  font-size: 14px;
+  margin-bottom: 20px; 
+  margin-top: 10px;
+  color: #fff;
+}
+
+.saldo-chek {
+  font-size: 26px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-right: 5%;
+  color: #fff;
+}
+
+
+.numero-tarjeta {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.register-login{
+  width: 20%;
+  margin-top:05%;
+  margin-left: 30px;
   
-  .tarjeta-header {
-    height: 40px;
-    background-color: #ff4081;
-  }
-  
-  .chip {
-    width: 70px;
-    height: 40px;
-    background-color: #fff;
-    border-radius: 5px;
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-  }
-  
-  .tarjeta-body {
-    padding: 20px;
-  }
-  
-  .numero-tarjeta {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #fff;
-  }
-  
-  .holder {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .campo {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  label {
-    font-weight: bold;
-    font-size: 12px;
-    color: #fff;
-  }
-  
-  span {
-    font-size: 14px;
-    color: #fff;
+}
+
+
+.holder {
+  display: flex;
+  justify-content: space-between;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+  font-size: 12px;
+  color: #fff;
+}
+
+.mat-toolbar {
+  background: #53357d;
+  color: #fff;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .marginleft {
+    margin-right: 0;
   }
 
-  .mat-toolbar {
-    background: #53357d;
-    color: #fff
- }
+  .tarjeta-credito {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .tarjeta-credito {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+  }
+}

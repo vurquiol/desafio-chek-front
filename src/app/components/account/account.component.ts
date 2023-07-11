@@ -1,7 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import {SnackBarAnnotatedComponent} from '../snack-bar-annotated/snack-bar-annotated.component';
 import { AccountService } from 'src/app/services/account.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDatepicker } from '@angular/material/datepicker';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-account',
@@ -11,12 +14,22 @@ import { AccountService } from 'src/app/services/account.service';
 })
 
 export class AccountComponent implements OnInit {
+  dataSource!: MatTableDataSource<any>;
+  displayedColumns: string[] = ['name', 'surname', 'usuario', 'exitoso', 'fecha'];
+
+  @ViewChild(MatDatepicker) datepicker!: MatDatepicker<Date>;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   @Output() logOut = new EventEmitter<boolean>();
-  
+  @Output() close = new EventEmitter<boolean>();
+  historico: any=false;
+  header:boolean=true;  
+  bmoduleaccount: boolean=false;
   public spinner: any = false;
 
   constructor(private _userService: UserService, private _accountService: AccountService,public snackbar: SnackBarAnnotatedComponent) {    
+   
+
   }
 
   account: any;
@@ -26,21 +39,21 @@ export class AccountComponent implements OnInit {
   valorEntrada: string = '';
   valorFormateado: string = '';
   valorFormateadoSaldo: string = '';
+  
 
   ngOnInit(): void {    
     this.user = this._userService.getIdentity();
     this.spinner = true;
     this._accountService.accountBalance(this.user,false).subscribe(
       response => {
-       
+      
         this.concatIdAccount(response.account.idAccount);
         this.concatcAmountBalance(response.account.accountBalance);
         
         this.balance = this.valorFormateadoSaldo;
         this.accountId = this.valorFormateado;
 
-        this.account = response.account;
-        console.log(this.account);
+        this.account = response.account;   
     
         this.spinner = false;
       },
@@ -54,8 +67,43 @@ export class AccountComponent implements OnInit {
         this.spinner = false;
       }
     );
+
+    
+     this._accountService.historical(this.user,false).subscribe(
+      response => {
+        console.log(response.historical)
+        this.dataSource = new MatTableDataSource(response.historical);
+        this.dataSource.paginator = this.paginator;
+        this.spinner = false;
+      },
+      error => {
+        if (error.status = 401) {
+          this.snackbar.openSnackBar("EXPIRED", 'Close');
+          
+        } else {
+          this.snackbar.openSnackBar(error.error.message, 'Close');
+        }
+        this.spinner = false;
+      }
+    );
+    
   } 
 
+  aplicarFiltro(fecha: Date): void {
+    this.dataSource.filterPredicate = (data: any) => {
+      const selectedDate = new Date(fecha);
+      const dataDate = new Date(data.fecha);
+      return (
+        selectedDate.getDate() === dataDate.getDate() &&
+        selectedDate.getMonth() === dataDate.getMonth() &&
+        selectedDate.getFullYear() === dataDate.getFullYear()
+      );
+    };
+    this.dataSource.filter = fecha.toString();
+    if (fecha) {
+      this.datepicker.close();
+    }
+  }
 //concatena y separa los valores del id account
  concatIdAccount(idAccount :number) {
     // Elimina los espacios existentes antes de contar los caracteres
@@ -80,7 +128,21 @@ export class AccountComponent implements OnInit {
     this.logOut.emit(true);
   }
 
-  sessionExp(){
+  sessionExpired(){
     localStorage.setItem('SessionExpired','true');    
+  }
+
+  moduleLoginAttempt(){
+    this.header=false;
+    this.historico=true;
+    this.close.emit(false);
+   
+  }
+
+
+
+  moduleBalance(){
+    this.header=true;
+    this.bmoduleaccount=true;
   }
 }
