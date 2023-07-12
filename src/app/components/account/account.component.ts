@@ -21,11 +21,12 @@ export class AccountComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   @Output() logOut = new EventEmitter<boolean>();
-  @Output() close = new EventEmitter<boolean>();
+  
   historico: any=false;
   header:boolean=true;  
   bmoduleaccount: boolean=false;
   public spinner: any = false;
+  public token: any;
 
   constructor(private _userService: UserService, private _accountService: AccountService,public snackbar: SnackBarAnnotatedComponent) {    
    
@@ -41,11 +42,13 @@ export class AccountComponent implements OnInit {
   valorFormateadoSaldo: string = '';
   
 
-  ngOnInit(): void {    
+  ngOnInit(): void {  
+   
+  this.token= this._userService.getToken();
     this.user = this._userService.getIdentity();
-    this.spinner = true;
-    this._accountService.accountBalance(this.user,false).subscribe(
-      response => {
+     this.spinner = true;
+    this._accountService.accountBalance(this.user,true).subscribe(
+      (response: any) => {
       
         this.concatIdAccount(response.account.idAccount);
         this.concatcAmountBalance(response.account.accountBalance);
@@ -57,9 +60,9 @@ export class AccountComponent implements OnInit {
     
         this.spinner = false;
       },
-      error => {
+      (error: any)  => {
         if (error.status = 401) {
-          this.snackbar.openSnackBar("EXPIRED", 'Close');
+          this.snackbar.openSnackBar("accountBalance", 'Close');
           
         } else {
           this.snackbar.openSnackBar(error.error.message, 'Close');
@@ -69,16 +72,15 @@ export class AccountComponent implements OnInit {
     );
 
     
-     this._accountService.historical(this.user,false).subscribe(
-      response => {
-        console.log(response.historical)
+     this._accountService.historical(this.user,true).subscribe(
+      (response: any) => {
         this.dataSource = new MatTableDataSource(response.historical);
         this.dataSource.paginator = this.paginator;
         this.spinner = false;
       },
-      error => {
+      (error: any)  => {
         if (error.status = 401) {
-          this.snackbar.openSnackBar("EXPIRED", 'Close');
+          this.snackbar.openSnackBar("historical", 'Close');
           
         } else {
           this.snackbar.openSnackBar(error.error.message, 'Close');
@@ -86,6 +88,15 @@ export class AccountComponent implements OnInit {
         this.spinner = false;
       }
     );
+ 
+    this._accountService.loginRegister(this.user,true).subscribe(
+      (response: any) => {
+        this.spinner=false
+      },
+      (error: any) => {       
+        this.spinner = false;
+      }
+    );     
     
   } 
 
@@ -128,17 +139,11 @@ export class AccountComponent implements OnInit {
     this.logOut.emit(true);
   }
 
-  sessionExpired(){
-    localStorage.setItem('SessionExpired','true');    
-  }
 
   moduleLoginAttempt(){
     this.header=false;
     this.historico=true;
-    this.close.emit(false);
-   
   }
-
 
 
   moduleBalance(){

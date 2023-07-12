@@ -75,6 +75,9 @@
   
 }
 
+.mat-table-responsive {
+  overflow-x: auto;
+}
 
 .holder {
   display: flex;

@@ -11,6 +11,7 @@ export class UserService {
 
     constructor(private _http: HttpClient) {
         this.url = "https://chek-back-vurquiol.rj.r.appspot.com/api/"
+        //this.url = "localhost:3000/api/"
     }
 
     signUp(user_login: any,gethash:boolean){
@@ -22,35 +23,11 @@ export class UserService {
         let params = json;
 
         let headers = new HttpHeaders({'Content-Type':'application/json'});
-        console.log(params)
+        
         return this._http.post<any>(this.url +'loguer',params,{headers: headers});
     }
 
-    loginRegister(user_login: any,gethash:boolean){
-        if (gethash) {
-            user_login.gethash = gethash;
-        }
-        
-        let json = JSON.stringify(user_login);
-        let params = json;
-
-        let headers = new HttpHeaders({'Content-Type':'application/json'});
-
-        return this._http.post<any>(this.url +'loginRegister',params,{headers: headers});
-    }
-
-    attempt(user_login: any,gethash:boolean){
-        if (gethash) {
-            user_login.gethash = gethash;
-        }
-        
-        let json = JSON.stringify(user_login);
-        let params = json;
-
-        let headers = new HttpHeaders({'Content-Type':'application/json'});
-
-        return this._http.post<any>(this.url +'loginAttempt',params,{headers: headers});
-    }
+   
 
     getIdentity(){
         let identity = localStorage.getItem('identity');
@@ -64,17 +41,16 @@ export class UserService {
         return JSON.parse(this.identity);
     }
 
-    getToken(){
+    getToken() {
         let token = localStorage.getItem('token');
-
-        if (token != 'undefined') {
-            this.token = token;
+      
+        if (token !== undefined && token !== null) {
+          this.token = token;
         } else {
-            this.token = null;
-            
+          this.token = null;
         }
+      
         return this.token;
-
-    }    
+      }
 
 }

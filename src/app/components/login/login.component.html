@@ -49,4 +49,5 @@
     <mat-spinner  class="spinner spinner-window"></mat-spinner>
 </div>
 
-<app-account *ngIf="identity" (logOut)="logout()"></app-account>
+
+<app-account *ngIf="identity && token!=null" (logOut)="logout()" ></app-account>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Output,EventEmitter } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
@@ -23,19 +23,14 @@ public spinner:any=false;
 
 color: ThemePalette = 'primary';
 mode: ProgressSpinnerMode = 'determinate';
+@Output() logOut = new EventEmitter<boolean>();
 
 constructor(private _userService: UserService, public snackbar: SnackBarAnnotatedComponent) {
   this.user = new User('', '', '', 0, '', '', 0);
   
 }
 ngOnInit(): void {
-  this.identity = this._userService.getIdentity()
-  this.token= this._userService.getToken();  
-}
-
-public crearCuenta(){
  
-  this.register=true;
 }
 
 public onSubmit() {
@@ -44,6 +39,7 @@ public onSubmit() {
 
 logIn(){
   this.spinner=true
+  
   this._userService.signUp(this.user,false).subscribe(
     response => {
       let identity = response.user;
@@ -93,23 +89,6 @@ logIn(){
     }
   );
 
-
-  this._userService.loginRegister(this.user,false).subscribe(
-    response => {
-      console.log(response);
-      this.spinner=false
-    },
-    error => {
-      var errorMessage = <any>error.error.message;
-      if (errorMessage != null) {
-        this.errorMessage = error.error.message   
-        //this.snackbar.openSnackBar(error.error.message, 'Close');
-        this.spinner=false          
-        
-      }
-    }
-  );       
-  
   
    
 }

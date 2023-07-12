@@ -5,12 +5,12 @@ import { Parser } from "@angular/compiler";
 
 @Injectable()
 export class AccountService {
-    public url: string;
-    identity: any;
+    public url: string;    
     token: any;
 
     constructor(private _http: HttpClient) {
         this.url = "https://chek-back-vurquiol.rj.r.appspot.com/api/"
+        //this.url = "localhost:3000/api/"
     }
 
     accountBalance(user_login: any,gethash:boolean){
@@ -21,7 +21,9 @@ export class AccountService {
         let json = JSON.stringify(user_login);
         let params = json;
 
-        let headers = new HttpHeaders({'Content-Type':'application/json'});
+        let headers = new HttpHeaders({
+            'Content-Type':'application/json',
+            'Authorization':this.getToken()});
 
         return this._http.post<any>(this.url +'balance',params,{headers: headers});
     }
@@ -34,35 +36,38 @@ export class AccountService {
         let json = JSON.stringify(user_login);
         let params = json;
 
-        let headers = new HttpHeaders({'Content-Type':'application/json'});
+        let headers = new HttpHeaders({
+            'Content-Type':'application/json',
+            'Authorization':this.getToken()});
 
         return this._http.post<any>(this.url +'historical',params,{headers: headers});
     }
 
-    getIdentity(){
-        let identity = localStorage.getItem('identity');
-
-        if (identity != 'undefined') {
-            this.identity = identity;
-        } else {
-            this.identity = null;
-            
+    loginRegister(user_login: any, gethash: boolean) {
+        if (gethash) {
+          user_login.gethash = gethash;
         }
-        return JSON.parse(this.identity);
-    }
 
-    getToken(){
+      let headers = new HttpHeaders({
+        'Content-Type':'application/json',
+        'Authorization':this.getToken()});
+        console.log(this.getToken())
+      
+        return this._http.post<any>(this.url + 'loginRegister', user_login, {headers: headers});
+      }
+   
+
+      getToken() {
         let token = localStorage.getItem('token');
-
-        if (token != 'undefined') {
-            this.token = token;
+      
+        if (token !== undefined && token !== null) {
+          this.token = token;
         } else {
-            this.token = null;
-            
+          this.token = null;
         }
+      
         return this.token;
-
-    }    
+      }
   
 
 }
