@@ -47,40 +47,13 @@ export class AccountComponent implements OnInit {
   this.token= this._userService.getToken();
     this.user = this._userService.getIdentity();
      this.spinner = true;
-    this._accountService.accountBalance(this.user,true).subscribe(
-      (response: any) => {
-      
-        this.concatIdAccount(response.account.idAccount);
-        this.concatcAmountBalance(response.account.accountBalance);
-        
-        this.balance = this.valorFormateadoSaldo;
-        this.accountId = this.valorFormateado;
-
-        this.account = response.account;   
+  
+     this.accountBalance();
+     this.loginRegister();
     
-        this.spinner = false;
-      },
-      (error: any)  => {
-        if (error.status = 401) {
-          this.snackbar.openSnackBar("accountBalance", 'Close');
-          
-        } else {
-          this.snackbar.openSnackBar(error.error.message, 'Close');
-        }
-        this.spinner = false;
-      }
-    );
-
- 
-    this._accountService.loginRegister(this.user,true).subscribe(
-      (response: any) => {
-        this.spinner=false
-      },
-      (error: any) => {       
-        this.spinner = false;
-      }
-    );     
-
+     
+  } 
+  historical(){
     this._accountService.historical(this.user,true).subscribe(
       (response: any) => {
         this.dataSource = new MatTableDataSource(response.historical);
@@ -97,8 +70,18 @@ export class AccountComponent implements OnInit {
         this.spinner = false;
       }
     );
-    
-  } 
+  }
+
+  loginRegister(){
+    this._accountService.loginRegister(this.user,true).subscribe(
+      (response: any) => {
+        this.spinner=false
+      },
+      (error: any) => {       
+        this.spinner = false;
+      }
+    );     
+  }
 
   aplicarFiltro(fecha: Date): void {
     this.dataSource.filterPredicate = (data: any) => {
@@ -139,14 +122,41 @@ export class AccountComponent implements OnInit {
     this.logOut.emit(true);
   }
 
+  accountBalance(){
+    this._accountService.accountBalance(this.user,true).subscribe(
+      (response: any) => {
+      
+        this.concatIdAccount(response.account.idAccount);
+        this.concatcAmountBalance(response.account.accountBalance);
+        
+        this.balance = this.valorFormateadoSaldo;
+        this.accountId = this.valorFormateado;
+
+        this.account = response.account;   
+    
+        this.spinner = false;
+      },
+      (error: any)  => {
+        if (error.status = 401) {
+          this.snackbar.openSnackBar("accountBalance", 'Close');
+          
+        } else {
+          this.snackbar.openSnackBar(error.error.message, 'Close');
+        }
+        this.spinner = false;
+      }
+    );
+  }
 
   moduleLoginAttempt(){
     this.header=false;
     this.historico=true;
+    this.historical();
   }
 
 
   moduleBalance(){
+    this.accountBalance();
     this.header=true;
     this.bmoduleaccount=true;
   }
