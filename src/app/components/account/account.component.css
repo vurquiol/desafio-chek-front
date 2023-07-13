@@ -42,7 +42,7 @@
   position: absolute;
   top: 10%;
   left: 2%;
-  width: 10%!important;
+  width: 36%!important
 
 }
 
@@ -70,7 +70,7 @@
 
 .register-login{
   width: 20%;
-  margin-top:05%;
+  margin-top:08%;
   margin-left: 30px;
   
 }
@@ -100,7 +100,12 @@ label {
   color: #fff;
 }
 
+.table-container {
+  overflow-x: auto;
+  width: 100%;
+}
 /* Media Queries */
+
 @media (max-width: 768px) {
   .marginleft {
     margin-right: 0;
@@ -109,6 +114,20 @@ label {
   .tarjeta-credito {
     margin-left: 0;
   }
+
+  .fecha-historico{
+    position: absolute;
+    top: 11%;
+    left: 2%;
+    width: 85%!important
+  
+  }
+
+  .register-login{
+    width: 20%;
+    margin-top:10%;
+    margin-left: 30px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -116,5 +135,22 @@ label {
     width: 100%;
     height: auto;
     margin: 0 auto;
+  }
+
+  .fecha-historico{
+    position: absolute;
+    top: 11%;
+    left: 2%;
+    width: 85%!important
+    
+  }
+
+  .menu{
+    width: 140%!important;
+  }
+  .register-login{
+    width: 20%;
+    margin-top:30%;
+    margin-left: 30px;
   }
 }

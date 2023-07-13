@@ -71,8 +71,17 @@ export class AccountComponent implements OnInit {
       }
     );
 
-    
-     this._accountService.historical(this.user,true).subscribe(
+ 
+    this._accountService.loginRegister(this.user,true).subscribe(
+      (response: any) => {
+        this.spinner=false
+      },
+      (error: any) => {       
+        this.spinner = false;
+      }
+    );     
+
+    this._accountService.historical(this.user,true).subscribe(
       (response: any) => {
         this.dataSource = new MatTableDataSource(response.historical);
         this.dataSource.paginator = this.paginator;
@@ -88,15 +97,6 @@ export class AccountComponent implements OnInit {
         this.spinner = false;
       }
     );
- 
-    this._accountService.loginRegister(this.user,true).subscribe(
-      (response: any) => {
-        this.spinner=false
-      },
-      (error: any) => {       
-        this.spinner = false;
-      }
-    );     
     
   } 
 
